@@ -1,4 +1,4 @@
-// app/(tabs)/tentang.tsx
+// app/(tabs)/tentang.tsx - Halaman Tentang Aplikasi (Latihan Mandiri Tahap 10)
 import { Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { typeScale, spacing } from "../../constants/styles";
