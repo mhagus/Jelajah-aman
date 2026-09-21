@@ -17,7 +17,7 @@ export default function TabTentang() {
         Aplikasi Pemantau Cuaca & Kualitas Udara
       </Text>
       <Text style={{ fontSize: typeScale.keterangan, color: "#666" }}>
-        Pengembang: Mahasiswa Praktikum Pemrograman Berbasis Platform
+        Pengembang: Muhmmad Agus
       </Text>
     </SafeAreaView>
   );
