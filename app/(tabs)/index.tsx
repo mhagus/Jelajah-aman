@@ -90,9 +90,20 @@ export default function HalamanUtama() {
  )}
 
  {cuaca && (
- <Text style={{ fontSize: 12, color: "#888" }}>
- Kondisi: {labelKodeCuaca(cuaca.saatIni.kodeCuaca)} • Angin {cuaca.saatIni.kecepatanAngin} km/j
- </Text>
+ <View>
+   <Text style={{ fontSize: 12, color: "#888" }}>
+     Kondisi: {labelKodeCuaca(cuaca.saatIni.kodeCuaca)} • Angin {cuaca.saatIni.kecepatanAngin} km/j
+   </Text>
+   <Text style={{ fontSize: 12, color: "#888" }}>
+     Harian: {cuaca.harian.suhuMinimal[0]}°C - {cuaca.harian.suhuMaksimal[0]}°C
+   </Text>
+ </View>
+ )}
+
+ {kualitasUdara && (
+   <Text style={{ fontSize: 10, color: "#888", textAlign: "center", marginBottom: 4 }}>
+     PM2.5: {kualitasUdara.pm25} µg/m³ • PM10: {kualitasUdara.pm10} µg/m³
+   </Text>
  )}
 
  <AtribusiCuaca />
