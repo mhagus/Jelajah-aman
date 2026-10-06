@@ -1,5 +1,5 @@
 // app/(tabs)/index.tsx
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { View, Text, ActivityIndicator, Button, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import SearchBox from "../../components/SearchBox";
@@ -14,7 +14,8 @@ import { labelKodeCuaca } from "../../constants/weatherCodes";
 import { HasilGeocoding } from "../../types/geocoding";
 import { DataCuacaLengkap, DataKualitasUdara } from "../../types/weather";
 import { mintaIzinLokasi, ambilKoordinatSaatIni } from "../../services/locationService";
-import { router } from "expo-router";
+import { router, useFocusEffect } from "expo-router";
+import { ambilSemuaFavorit } from "../../services/favoritStorage";
 export default function HalamanUtama() {
  const [teksCari, setTeksCari] = useState("");
  const [hasilPencarian, setHasilPencarian] = useState<HasilGeocoding[]>([]);
@@ -24,6 +25,17 @@ export default function HalamanUtama() {
  const [sedangMemuat, setSedangMemuat] = useState(false);
  const [pesanError, setPesanError] = useState<string | null>(null);
  const [pesanLokasi, setPesanLokasi] = useState<string | null>(null);
+ const [sudahFavorit, setSudahFavorit] = useState(false);
+
+ useFocusEffect(
+ useCallback(() => {
+ if (kotaTerpilih) {
+ ambilSemuaFavorit().then((favs) => {
+ setSudahFavorit(favs.some((k) => k.id === kotaTerpilih.id));
+ });
+ }
+ }, [kotaTerpilih])
+ );
 
  const teksTertunda = useDebounce(teksCari, 500);
  const requestIdRef = useRef(0); // pencegah race condition
@@ -113,6 +125,7 @@ export default function HalamanUtama() {
  tingkatAQI={konversiTingkatAQI(kualitasUdara.indeksAQI)}
  indeksAQI={kualitasUdara.indeksAQI}
  />
+ {!sudahFavorit && (
  <Button
  title="Tambahkan ke Favorit"
  onPress={() =>
@@ -127,6 +140,7 @@ export default function HalamanUtama() {
  })
  }
  />
+ )}
  </>
  )}
 
