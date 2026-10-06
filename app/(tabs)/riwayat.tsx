@@ -1,6 +1,6 @@
 // app/(tabs)/riwayat.tsx
 import { useState, useCallback } from "react";
-import { View, Text, Button, Alert } from "react-native";
+import { View, Text, Button, Alert, Platform } from "react-native";
 import { useFocusEffect } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ambilSemuaFavorit, hapusFavorit } from "../../services/favoritStorage";
@@ -16,9 +16,17 @@ export default function TabRiwayat() {
  );
 
  function hapus(kota: KotaFavorit) {
+ if (Platform.OS === "web") {
+ const confirmed = window.confirm(`Yakin hapus ${kota.nama}?`);
+ if (confirmed) {
+ hapusFavorit(kota.id).then(() => {
+ setDaftarFavorit((prev) => prev.filter((k) => k.id !== kota.id));
+ });
+ }
+ } else {
  Alert.alert(
- "Konfirmasi",
  `Yakin hapus ${kota.nama}?`,
+ "",
  [
  { text: "Batal", style: "cancel" },
  {
@@ -31,6 +39,7 @@ export default function TabRiwayat() {
  },
  ]
  );
+ }
  }
 
  return (
