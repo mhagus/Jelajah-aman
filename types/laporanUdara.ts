@@ -4,6 +4,8 @@ export type TingkatAQI = "BAIK" | "SEDANG" | "TIDAK_SEHAT" | "BERBAHAYA";
 export interface LaporanUdara {
   kota: string;
   indeksAQI: number;
-  tingkat: "BAIK" | "SEDANG" | "TIDAK_SEHAT" | "BERBAHAYA";
+  tingkat: TingkatAQI;
   diperbaruiPada?: string;
+  isOffline?: boolean;
+  isEstimasi?: boolean;
 }
